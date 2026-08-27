@@ -3,303 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FM88.50MHz Music Line Station | ฟังวิทยุออนไลน์ 24 ชม.</title>
+    <title>FM88.50MHz music line station</title>
     <style>
+        /* สไตล์หน้าเว็บสไตล์คล้าย COOLISM เน้นความโมเดิร์น */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Prompt', 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #0b0c10;
+            background: linear-gradient(180deg, #0a0f1d 0%, #03050a 100%);
             color: #ffffff;
-            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .player-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px 30px;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            width: 90%;
+            max-width: 380px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
         }
         
-        /* แถบเมนูด้านบน (Header Navigation) */
-        header {
-            background: rgba(11, 12, 16, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
+        /* 1. จุดที่แสดงรูปภาพโลโก้ของคุณ */
+        .logo-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, #00ffcc, #0077ff);
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.2);
+            position: relative;
         }
-        .brand-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0a0f1d;
+            transition: transform 0.5s ease;
+        }
+        
+        /* เอฟเฟกต์หมุนแผ่นเสียงเบาๆ เมื่อกำลังเล่นเพลงสไตล์เว็บวิทยุหรู */
+        .playing .logo-container img {
+            animation: rotateLogo 20s linear infinite;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 0.95rem;
             color: #00ffcc;
-            letter-spacing: 1px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 35px;
+            font-weight: 600;
+        }
+        
+        /* ปุ่มเปิดหน้าต่างวิทยุ (แก้บั๊ก HTTPS บล็อกเสียง) */
+        .play-btn-main {
+            background: linear-gradient(135deg, #00ffcc, #00bfff);
+            color: #03050a;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 255, 204, 0.3);
             display: flex;
+            justify-content: center;
             align-items: center;
             gap: 10px;
         }
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
+        .play-btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 255, 204, 0.5);
+            letter-spacing: 0.5px;
         }
-        .nav-links a {
-            color: #c5c6c7;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: #00ffcc;
-        }
-
-        /* โซนเนื้อหาหลักแบบ Visual Banner */
-        .hero-section {
-            background: linear-gradient(180deg, rgba(0,255,204,0.05) 0%, rgba(11,12,16,1) 100%), url('https://unsplash.com') no-repeat center center/cover;
-            height: 70vh;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            margin-top: 60px;
-        }
-        .hero-content {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .live-badge {
-            background: #ff3366;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
+        
+        .station-location {
             font-size: 0.8rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 15px;
-            animation: blink 1.5s infinite;
-        }
-        .hero-content h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            line-shadow: 0 0 20px rgba(0,255,204,0.2);
-        }
-        .hero-content p {
-            color: #c5c6c7;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+            color: #64748b;
+            margin-top: 25px;
+            letter-spacing: 1px;
         }
 
-        /* โซนแนะนำคอนเทนต์ (Contents Section แบบ COOLISM) */
-        .content-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px 120px;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            color: #ffffff;
-            margin-bottom: 25px;
-            position: relative;
-            padding-left: 15px;
-        }
-        .section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 15%;
-            height: 70%;
-            width: 4px;
-            background: #00ffcc;
-            border-radius: 2px;
-        }
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .card {
-            background: #1f2833;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,255,204,0.1);
-        }
-        .card-img {
-            height: 180px;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            background-size: cover;
-            background-position: center;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .card-body h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: #ffffff;
-        }
-        .card-body p {
-            color: #45f3ff;
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
-
-        /* แถบเครื่องเล่นเพลงด้านล่างหน้าจอ (Sticky Player Bar) */
-        .sticky-player-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(31, 40, 51, 0.95);
-            backdrop-filter: blur(15px);
-            border-top: 2px solid #00ffcc;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 9999;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.5);
-        }
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .player-thumb {
-            width: 50px;
-            height: 50px;
-            background: #00ffcc;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        .track-details h4 {
-            font-size: 1rem;
-            margin-bottom: 2px;
-        }
-        .track-details p {
-            font-size: 0.8rem;
-            color: #45f3ff;
-        }
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .big-play-btn {
-            background: #00ffcc;
-            color: #0b0c10;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-            box-shadow: 0 0 15px rgba(0,255,204,0.4);
-        }
-        .big-play-btn:hover {
-            transform: scale(1.1);
-        }
-        .social-link-btn {
-            background: #1877f2;
-            color: white;
-            padding: 8px 18px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        .social-link-btn:hover {
-            background: #145dbf;
-        }
-
-        /* อนิเมชันประกอบ */
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
-
-        /* ปรับหน้าตาสำหรับเปิดบนมือถือ */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero-content h1 { font-size: 2.2rem; }
-            .sticky-player-bar { padding: 15px; flex-direction: column; gap: 15px; text-align: center; }
-            .player-info { width: 100%; justify-content: center; }
-            .player-controls { width: 100%; justify-content: space-between; }
+        @keyframes rotateLogo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- บาร์เมนูด้านบนแบบพรีเมียม -->
-    <header>
-        <div class="brand-logo">📻 FM 88.50 MHz</div>
-        <ul class="nav-links">
-            <li><a href="#" class="active">หน้าแรก</a></li>
-            <li><a href="https://facebook.com" target="_blank">แฟนเพจ</a></li>
-            <li><a href="#contents">กิจกรรมสถานี</a></li>
-        </ul>
-    </header>
-
-    <!-- หน้าปกแบนเนอร์ใหญ่สไตล์เว็บสตรีมมิ่ง -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <span class="live-badge">• LIVE STREAMING</span>
-            <h1>Music Line Station</h1>
-            <p>สถานีวิทยุออนไลน์ที่เสิร์ฟเพลงเพราะตลอดวัน ส่งตรงความสุขจาก อ.แม่สาย จ.เชียงราย [06.00 - 18.00 น.]</p>
+    <div class="player-card" id="mainCard">
+        
+        <!-- [จุดใส่รูป] เรียกใช้งานไฟล์รูปภาพชื่อ logo.jpg ที่คุณอัปโหลดขึ้น GitHub -->
+        <div class="logo-container">
+            <img src="logo.jpg" alt="FM88.50MHz Logo">
         </div>
-    </section>
+        
+        <h1>FM88.50MHz</h1>
+        <p>music line station</p>
+        
+        <!-- ปุ่มกดเพื่อเปิดหน้าต่างวิทยุสดแบบ Pop-up ไร้รอยต่อ -->
+        <button class="play-btn-main" onclick="openCoolPlayer()">
+            <span>▶</span> LISTEN LIVE
+        </button>
+        
+        <div class="station-location">MAE SAI • CHIANG RAI</div>
+    </div>
 
-    <!-- โซนรายการคอนเทนต์แนะนำแบบแกะดีไซน์ย่อยมาจากเว็บใหญ่ -->
-    <section class="content-container" id="contents">
-        <h2 class="section-title">FM88.50 Recommend</h2>
-        <div class="grid-layout">
+    <script>
+        function openCoolPlayer() {
+            // สั่งเปิดเอฟเฟกต์หมุนภาพที่หน้าเว็บหลักเพื่อความสวยงาม
+            document.getElementById('mainCard').classList.add('playing');
             
-            <!-- การ์ดที่ 1 คอนเทนต์กิจกรรม -->
-            <div class="card">
-                <div class="card-img" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://unsplash.com');">🎵</div>
-                <div class="card-body">
-                    <h3>Music Vote ประจำสัปดาห์</h3>
-                    <p>ร่วมโหวตเพลงโปรดที่คุณชอบฟังที่สุดในเพจดีเจ</p>
-                </div>
-            </div>
+            // เปิดหน้าต่างย่อยแยกเพื่อเลี่ยงระบบ HTTPS บล็อกลิงก์เสียง HTTP 
+            const playerWindow = window.open("", "CoolRadioPlayer", "width=380,height=280,resizable=no");
+            playerWindow.document.write(`
+                <html>
+                <head>
+                    <title>LIVE - FM 88.50 MHz</title>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <style>
+                        body { 
+                            background: #03050a; 
+                            color: #ffffff; 
+                            text-align: center; 
+                            font-family: sans-serif; 
+                            padding: 40px 20px;
+                        }
+                        .title { color: #00ffcc; font-size: 1.5rem; margin-bottom: 5px; font-weight: bold; }
+                        .sub { color: #64748b; font-size: 0.9rem; margin-bottom: 25px; letter-spacing: 2px; }
+                        audio { width: 100%; max-width: 300px; outline: none; }
+                        .tip { font-size: 11px; margin-top: 30px; color: #ff3366; opacity: 0.8; }
+                    </style>
+                </head>
+                <body>
+                    <div class="title">📻 FM 88.50 MHz</div>
+                    <div class="sub">MUSIC LINE STATION</div>
+                    <audio controls autoplay>
+                        <source src="http://ddnsbycat.com" type="audio/mpeg">
+                        เบราว์เซอร์ไม่รองรับระบบเสียงนี้
+                    </audio>
+                    <div class="tip">*เปิดหน้าต่างนี้ทิ้งไว้เพื่อฟังเพลงอย่างต่อเนื่อง</div>
+                </body>
+                </html>
+            `);
+        }
+    </script>
 
-            <!-- การ์ดที่ 2 ข้อมูลช่องทางแชทหาดีเจ -->
-            <div class="card">
-                <div class="card-img" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://unsplash.com');">💬</div>
-                <div class="card-body">
-                    <h3>Your Request ขอเพลงกันเข้ามา</h3>
-                    <p>ฟังกันเยอะๆ นะจ๊ะ ทักแชทขอเพลงกับดีเจได้ทุกช่วงดีเจ</p>
-                </div>
-            </div>
-
-            <!-- การ์ดที่ 3 แนะนำพื้นที่พิกัด -->
-            <div class="card">
-                <div class="card-img" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://unsplash.com');">📍</div>
-                <div class="card-body">
-                    <h3>Mae Sai Community</h3>
-                    <p>คลื่นวิทยุคู่ใจชาวอำเภอแม่สาย จังหวัดเชียงราย</p>
-                </div>
-            </div>
-
-        </div>
+</body>
+</html>
