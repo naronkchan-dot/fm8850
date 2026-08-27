@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FM88.50MHz music line station</title>
+    <title>FM88.50MHz music line station | เพลงดีดีเพื่อคุณ</title>
     <style>
-        /* สไตล์หน้าเว็บสไตล์คล้าย COOLISM เน้นความโมเดิร์น */
+        /* ถอดแบบดีไซน์ Luxury Emerald Theme จาก Greenwave */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Prompt', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: linear-gradient(180deg, #0a0f1d 0%, #03050a 100%);
+            background-color: #050b08; /* พื้นหลังสีดำอมเขียวเข้มแบบพรีเมียม */
             color: #ffffff;
             display: flex;
             justify-content: center;
@@ -21,151 +21,224 @@
             min-height: 100vh;
             padding: 20px;
         }
-        .player-card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px 30px;
-            border-radius: 30px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .greenwave-container {
+            background: linear-gradient(180deg, rgba(10, 28, 20, 0.8) 0%, rgba(5, 11, 8, 0.95) 100%);
+            width: 100%;
+            max-width: 420px;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 177, 106, 0.1);
+            border: 1px solid rgba(0, 177, 106, 0.15);
+            overflow: hidden;
             text-align: center;
-            width: 90%;
-            max-width: 380px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            padding-bottom: 30px;
         }
         
-        /* 1. จุดที่แสดงรูปภาพโลโก้ของคุณ */
-        .logo-container {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
-            padding: 5px;
-            background: linear-gradient(135deg, #00ffcc, #0077ff);
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.2);
-            position: relative;
+        /* ส่วนหัวของคลื่นวิทยุ */
+        .brand-header {
+            background-color: rgba(0, 177, 106, 0.1);
+            padding: 12px;
+            font-size: 0.75rem;
+            color: #00ffaa;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(0, 177, 106, 0.1);
         }
-        .logo-container img {
+
+        /* กล่องแสดงภาพหน้าปกที่ดึงมาจาก GitHub */
+        .album-art-wrapper {
+            margin: 35px auto 20px;
+            position: relative;
+            width: 220px;
+            height: 220px;
+        }
+        .album-art {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
+            border-radius: 16px; /* ขอบโค้งสี่เหลี่ยมสไตล์แอปฟังเพลงสมัยใหม่ */
             object-fit: cover;
-            border: 4px solid #0a0f1d;
-            transition: transform 0.5s ease;
-        }
-        
-        /* เอฟเฟกต์หมุนแผ่นเสียงเบาๆ เมื่อกำลังเล่นเพลงสไตล์เว็บวิทยุหรู */
-        .playing .logo-container img {
-            animation: rotateLogo 20s linear infinite;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         h1 {
             font-size: 1.8rem;
             color: #ffffff;
             font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
-        p {
-            font-size: 0.95rem;
-            color: #00ffcc;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 35px;
-            font-weight: 600;
+        .slogan {
+            font-size: 0.9rem;
+            color: #00ffaa;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
         }
+
+        /* แอนิเมชันคลื่นเสียงดนตรีกำลังขยับเหมือนหน้าเล่นเพลงของ Greenwave */
+        .audio-wave {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 4px;
+            height: 30px;
+            margin-bottom: 30px;
+        }
+        .wave-bar {
+            width: 3px;
+            height: 5px;
+            background-color: #00ffaa;
+            border-radius: 2px;
+            animation: bounce 1s infinite alternate;
+        }
+        /* แอนิเมชันสุ่มระดับคลื่นเสียงให้ดูสมจริง */
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; height: 12px; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; height: 25px; }
+        .wave-bar:nth-child(4) { animation-delay: 0.1s; height: 18px; }
+        .wave-bar:nth-child(5) { animation-delay: 0.6s; height: 8px; }
         
-        /* ปุ่มเปิดหน้าต่างวิทยุ (แก้บั๊ก HTTPS บล็อกเสียง) */
-        .play-btn-main {
-            background: linear-gradient(135deg, #00ffcc, #00bfff);
-            color: #03050a;
+        @keyframes bounce {
+            from { height: 5px; }
+            to { height: 28px; }
+        }
+
+        /* ปุ่มเล่นหลักสไตล์ Greenwave */
+        .play-btn-green {
+            background: linear-gradient(135deg, #00b16a, #00ffaa);
+            color: #050b08;
             border: none;
-            width: 100%;
+            width: 85%;
             padding: 16px;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0, 255, 204, 0.3);
-            display: flex;
+            box-shadow: 0 10px 25px rgba(0, 177, 106, 0.3);
+            display: inline-flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
         }
-        .play-btn-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0, 255, 204, 0.5);
-            letter-spacing: 0.5px;
-        }
-        
-        .station-location {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-top: 25px;
-            letter-spacing: 1px;
+        .play-btn-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 177, 106, 0.5);
+            background: #ffffff;
         }
 
-        @keyframes rotateLogo {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* ตารางผังตารางเวลาจัดรายการจำลองด้านล่างการถอดแบบ Greenwave */
+        .program-schedule {
+            width: 85%;
+            margin: 30px auto 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: left;
+            font-size: 0.85rem;
+            border: 1px solid rgba(0, 177, 106, 0.08);
+        }
+        .schedule-title {
+            color: #00ffaa;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .schedule-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            color: #d1d5db;
+        }
+
+        .fb-link {
+            color: #a3a3a3;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .fb-link:hover {
+            color: #00ffaa;
         }
     </style>
 </head>
 <body>
 
-    <div class="player-card" id="mainCard">
+    <div class="greenwave-container">
+        <div class="brand-header">Music Line Station Network</div>
         
-        <!-- [จุดใส่รูป] เรียกใช้งานไฟล์รูปภาพชื่อ logo.jpg ที่คุณอัปโหลดขึ้น GitHub -->
-        <div class="logo-container">
-            <img src="logo.jpg" alt="FM88.50MHz Logo">
+        <!-- [ระบบดึงรูปภาพ] ดึงไฟล์ชื่อ logo.jpg จากที่อัปโหลดไว้บนคลังโค้ด GitHub ของคุณมาแสดงผลเป็นปก -->
+        <div class="album-art-wrapper">
+            <img src="logo.jpg" alt="FM88.50MHz Cover" class="album-art" onerror="this.src='https://placeholder.com'">
         </div>
         
-        <h1>FM88.50MHz</h1>
-        <p>music line station</p>
+        <h1>FM 88.50 MHz</h1>
+        <div class="slogan">ฟังกันเยอะๆ นะจ๊ะ รับฟังออนไลน์ได้</div>
         
-        <!-- ปุ่มกดเพื่อเปิดหน้าต่างวิทยุสดแบบ Pop-up ไร้รอยต่อ -->
-        <button class="play-btn-main" onclick="openCoolPlayer()">
-            <span>▶</span> LISTEN LIVE
+        <!-- แถบคลื่นเสียงเพื่อความพรีเมียม -->
+        <div class="audio-wave">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+        </div>
+
+        <!-- ปุ่มกดเพื่อเปิดสะพานสัญญาณเสียงข้ามบั๊กเบราว์เซอร์บล็อก HTTP -->
+        <button class="play-btn-green" onclick="launchGreenPlayer()">
+            <span>▶</span> LISTEN LIVE ONLINE
         </button>
         
-        <div class="station-location">MAE SAI • CHIANG RAI</div>
+        <!-- ช่องผังข้อมูลตารางเวลาที่แกะมาจากหน้าแฟนเพจหลักของคุณ -->
+        <div class="program-schedule">
+            <div class="schedule-title">📻 ON AIR SCHEDULE</div>
+            <div class="schedule-row">
+                <span>⏰ เวลาออกอากาศสด:</span>
+                <span style="color:#ffffff;">06:00 น. - 18:00 น.</span>
+            </div>
+            <div class="schedule-row">
+                <span>📍 สถานที่ตั้งสถานี:</span>
+                <span style="color:#ffffff;">อ.แม่สาย จ.เชียงราย</span>
+            </div>
+        </div>
+
+        <a href="https://www.facebook.com/mls8850/" target="_blank" class="fb-link">
+            🔗 ไปยังหน้า Facebook แฟนเพจหลัก
+        </a>
     </div>
 
     <script>
-        function openCoolPlayer() {
-            // สั่งเปิดเอฟเฟกต์หมุนภาพที่หน้าเว็บหลักเพื่อความสวยงาม
-            document.getElementById('mainCard').classList.add('playing');
-            
-            // เปิดหน้าต่างย่อยแยกเพื่อเลี่ยงระบบ HTTPS บล็อกลิงก์เสียง HTTP 
-            const playerWindow = window.open("", "CoolRadioPlayer", "width=380,height=280,resizable=no");
-            playerWindow.document.write(`
+        function launchGreenPlayer() {
+            // สั่งรันหน้าต่าง Pop-up สไตล์สตรีมมิ่งมินิมอลเพื่อเลี่ยงความปลอดภัย HTTPS บล็อก URL แบบ HTTP
+            const player = window.open("", "GreenWaveStylePlayer", "width=380,height=260,resizable=no");
+            player.document.write(`
                 <html>
                 <head>
-                    <title>LIVE - FM 88.50 MHz</title>
+                    <title>FM 88.50 MHz LIVE</title>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <style>
                         body { 
-                            background: #03050a; 
+                            background-color: #050b08; 
                             color: #ffffff; 
                             text-align: center; 
                             font-family: sans-serif; 
                             padding: 40px 20px;
                         }
-                        .title { color: #00ffcc; font-size: 1.5rem; margin-bottom: 5px; font-weight: bold; }
-                        .sub { color: #64748b; font-size: 0.9rem; margin-bottom: 25px; letter-spacing: 2px; }
-                        audio { width: 100%; max-width: 300px; outline: none; }
-                        .tip { font-size: 11px; margin-top: 30px; color: #ff3366; opacity: 0.8; }
+                        .station-name { color: #00ffaa; font-size: 1.6rem; font-weight: bold; margin-bottom: 5px; }
+                        .desc { color: #64748b; font-size: 0.85rem; margin-bottom: 25px; letter-spacing: 1px; }
+                        audio { width: 100%; max-width: 310px; }
+                        .alert-msg { font-size: 11px; margin-top: 25px; color: #ff4d4d; opacity: 0.8; }
                     </style>
                 </head>
                 <body>
-                    <div class="title">📻 FM 88.50 MHz</div>
-                    <div class="sub">MUSIC LINE STATION</div>
+                    <div class="station-name">🟢 FM 88.50 MHz</div>
+                    <div class="desc">MUSIC LINE STATION • LIVE STREAMING</div>
                     <audio controls autoplay>
                         <source src="http://ddnsbycat.com" type="audio/mpeg">
-                        เบราว์เซอร์ไม่รองรับระบบเสียงนี้
+                        ระบบไม่รองรับเครื่องเล่นเสียงนี้
                     </audio>
-                    <div class="tip">*เปิดหน้าต่างนี้ทิ้งไว้เพื่อฟังเพลงอย่างต่อเนื่อง</div>
+                    <div class="alert-msg">*เปิดหน้าต่างขนาดเล็กนี้ทิ้งไว้เพื่อการรับฟังเสียงเพลงอย่างต่อเนื่อง</div>
                 </body>
                 </html>
             `);
