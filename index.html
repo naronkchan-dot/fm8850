@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FM88.50MHz music line station</title>
@@ -30,20 +29,11 @@
             width: 90%;
             max-width: 400px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            position: relative;
-        }
-        .logo-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 15px;
         }
         .logo {
             font-size: 5rem;
-            transition: transform 0.3s ease;
-        }
-        /* แอนิเมชันเมื่อกำลังเล่นเพลง */
-        .playing .logo {
-            animation: pulse 1.5s infinite ease-in-out;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite ease-in-out;
         }
         h1 {
             font-size: 2rem;
@@ -58,111 +48,49 @@
             text-transform: uppercase;
             letter-spacing: 2px;
         }
-        .play-btn {
+        /* ปุ่มลิงก์ภายนอกสำหรับกดฟัง */
+        .listen-btn {
+            display: inline-block;
             background: #00ffcc;
             color: #0f0f1a;
-            border: none;
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            font-size: 2rem;
-            cursor: pointer;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
+            text-decoration: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 255, 204, 0.4);
-            margin-bottom: 20px;
-            outline: none;
         }
-        .play-btn:hover {
-            transform: scale(1.1);
+        .listen-btn:hover {
+            transform: scale(1.05);
             box-shadow: 0 5px 25px rgba(0, 255, 204, 0.6);
         }
-        .status-tag {
-            font-size: 0.85rem;
-            color: #ff3366;
-            background: rgba(255, 51, 102, 0.1);
-            padding: 6px 16px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 10px;
-            border: 1px solid rgba(255, 51, 102, 0.2);
-            transition: all 0.3s ease;
-        }
-        .playing .status-tag {
-            color: #00ffcc;
-            background: rgba(0, 255, 204, 0.1);
-            border: 1px solid rgba(0, 255, 204, 0.2);
+        .note {
+            font-size: 0.8rem;
+            color: #a0a0c0;
+            margin-top: 15px;
         }
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="player-container" id="playerContainer">
-        <div class="logo-wrapper">
-            <div class="logo">📻</div>
-        </div>
+    <div class="player-container">
+        <div class="logo">📻</div>
         <h1>FM88.50MHz</h1>
         <p>music line station</p>
         
-        <!-- ปุ่มควบคุมการเล่น -->
-        <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
-        <br>
-        <div class="status-tag" id="statusTag">กำลังเชื่อมต่อ...</div>
-
-        <!-- ตัวเล่นสัญญาณสตรีมวิทยุ -->
-        <audio id="radioPlayer" preload="none">
-            <source src="http://fmsanglar.ddnsbycat.com:9001/;stream.mp3" type="audio/mpeg">
-        </audio>
+        <!-- ลิงก์ตรงที่กดแล้วจะเปิดแท็บใหม่เพื่อเล่นวิทยุทันที โดยไม่โดน HTTPS บล็อก -->
+        <a href="http://fmsanglar.ddnsbycat.com:9001/;stream.mp3" target="_blank" class="listen-btn">
+            ▶ กดเพื่อฟังวิทยุออนไลน์
+        </a>
+        
+        <div class="note">*คลิกเพื่อเปิดหน้าต่างเครื่องเล่นวิทยุสด</div>
     </div>
-
-    <script>
-        const audio = document.getElementById('radioPlayer');
-        const playBtn = document.getElementById('playBtn');
-        const container = document.getElementById('playerContainer');
-        const statusTag = document.getElementById('statusTag');
-
-        // ฟังก์ชันสั่งเล่นวิทยุ
-        function playRadio() {
-            audio.play().then(() => {
-                playBtn.innerText = '⏸';
-                container.classList.add('playing');
-                statusTag.innerText = '• กำลังถ่ายทอดสด (LIVE)';
-            }).catch(error => {
-                // กรณีเบราว์เซอร์บล็อกการเล่นอัตโนมัติ (Autoplay Policy)
-                console.log("Autoplay ถูกบล็อก รอผู้ใช้กดโต้ตอบ");
-                playBtn.innerText = '▶';
-                container.classList.remove('playing');
-                statusTag.innerText = 'คลิกปุ่ม Play เพื่อฟังวิทยุ';
-            });
-        }
-
-        // ฟังก์ชันเปิด-ปิดเสียง
-        function togglePlay() {
-            if (audio.paused) {
-                // รีโหลดสตรีมใหม่ทุกครั้งที่กดเล่น เพื่อให้ได้เสียงที่เป็นปัจจุบันที่สุด (ไม่ดีเลย์สะสม)
-                audio.load();
-                playRadio();
-            } else {
-                audio.pause();
-                playBtn.innerText = '▶';
-                container.classList.remove('playing');
-                statusTag.innerText = 'หยุดออกอากาศชั่วคราว';
-            }
-        }
-
-        // พยายามทำงานทันทีเมื่อหน้าเว็บโหลดเสร็จ
-        window.addEventListener('DOMContentLoaded', () => {
-            audio.load();
-            playRadio();
-        });
-    </script>
 
 </body>
 </html>
