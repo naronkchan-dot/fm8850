@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FM88.50MHz music line station | เพลงดีดีเพื่อคุณ</title>
     <style>
-        /* ถอดแบบดีไซน์ Luxury Emerald Theme จาก Greenwave */
+        /* ดีไซน์ Luxury Emerald Theme สไตล์ Greenwave */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,7 +13,7 @@
             font-family: 'Prompt', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #050b08; /* พื้นหลังสีดำอมเขียวเข้มแบบพรีเมียม */
+            background-color: #050b08;
             color: #ffffff;
             display: flex;
             justify-content: center;
@@ -33,7 +33,6 @@
             padding-bottom: 30px;
         }
         
-        /* ส่วนหัวของคลื่นวิทยุ */
         .brand-header {
             background-color: rgba(0, 177, 106, 0.1);
             padding: 12px;
@@ -45,7 +44,6 @@
             border-bottom: 1px solid rgba(0, 177, 106, 0.1);
         }
 
-        /* กล่องแสดงภาพหน้าปกที่ดึงมาจาก GitHub */
         .album-art-wrapper {
             margin: 35px auto 20px;
             position: relative;
@@ -55,7 +53,7 @@
         .album-art {
             width: 100%;
             height: 100%;
-            border-radius: 16px; /* ขอบโค้งสี่เหลี่ยมสไตล์แอปฟังเพลงสมัยใหม่ */
+            border-radius: 16px;
             object-fit: cover;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             border: 2px solid rgba(255, 255, 255, 0.1);
@@ -74,7 +72,6 @@
             letter-spacing: 1px;
         }
 
-        /* แอนิเมชันคลื่นเสียงดนตรีกำลังขยับเหมือนหน้าเล่นเพลงของ Greenwave */
         .audio-wave {
             display: flex;
             justify-content: center;
@@ -90,7 +87,6 @@
             border-radius: 2px;
             animation: bounce 1s infinite alternate;
         }
-        /* แอนิเมชันสุ่มระดับคลื่นเสียงให้ดูสมจริง */
         .wave-bar:nth-child(2) { animation-delay: 0.2s; height: 12px; }
         .wave-bar:nth-child(3) { animation-delay: 0.4s; height: 25px; }
         .wave-bar:nth-child(4) { animation-delay: 0.1s; height: 18px; }
@@ -101,7 +97,6 @@
             to { height: 28px; }
         }
 
-        /* ปุ่มเล่นหลักสไตล์ Greenwave */
         .play-btn-green {
             background: linear-gradient(135deg, #00b16a, #00ffaa);
             color: #050b08;
@@ -125,7 +120,6 @@
             background: #ffffff;
         }
 
-        /* ตารางผังตารางเวลาจัดรายการจำลองด้านล่างการถอดแบบ Greenwave */
         .program-schedule {
             width: 85%;
             margin: 30px auto 15px;
@@ -167,7 +161,6 @@
     <div class="greenwave-container">
         <div class="brand-header">Music Line Station Network</div>
         
-        <!-- [ระบบดึงรูปภาพ] ดึงไฟล์ชื่อ logo.jpg จากที่อัปโหลดไว้บนคลังโค้ด GitHub ของคุณมาแสดงผลเป็นปก -->
         <div class="album-art-wrapper">
             <img src="logo.jpg" alt="FM88.50MHz Cover" class="album-art" onerror="this.src='https://placeholder.com'">
         </div>
@@ -175,7 +168,6 @@
         <h1>FM 88.50 MHz</h1>
         <div class="slogan">ฟังกันเยอะๆ นะจ๊ะ รับฟังออนไลน์ได้</div>
         
-        <!-- แถบคลื่นเสียงเพื่อความพรีเมียม -->
         <div class="audio-wave">
             <div class="wave-bar"></div>
             <div class="wave-bar"></div>
@@ -184,12 +176,11 @@
             <div class="wave-bar"></div>
         </div>
 
-        <!-- ปุ่มกดเพื่อเปิดสะพานสัญญาณเสียงข้ามบั๊กเบราว์เซอร์บล็อก HTTP -->
+        <!-- ปุ่มกดเชื่อมสัญญาณเสียงวิทยุผ่านระบบ Pop-up หน้าต่างย่อย -->
         <button class="play-btn-green" onclick="launchGreenPlayer()">
             <span>▶</span> LISTEN LIVE ONLINE
         </button>
         
-        <!-- ช่องผังข้อมูลตารางเวลาที่แกะมาจากหน้าแฟนเพจหลักของคุณ -->
         <div class="program-schedule">
             <div class="schedule-title">📻 ON AIR SCHEDULE</div>
             <div class="schedule-row">
@@ -202,14 +193,14 @@
             </div>
         </div>
 
-        <a href="https://www.facebook.com/mls8850/" target="_blank" class="fb-link">
+        <a href="https://facebook.com" target="_blank" class="fb-link">
             🔗 ไปยังหน้า Facebook แฟนเพจหลัก
         </a>
     </div>
 
     <script>
         function launchGreenPlayer() {
-            // สั่งรันหน้าต่าง Pop-up สไตล์สตรีมมิ่งมินิมอลเพื่อเลี่ยงความปลอดภัย HTTPS บล็อก URL แบบ HTTP
+            // ระบบสั่งเปิดป๊อปอัปตัวเล่นขนาดกะทัดรัดแยกส่วนออกมา เพื่อหลบเลี่ยงนโยบาย HTTPS บล็อกสื่อไม่ปลอดภัย
             const player = window.open("", "GreenWaveStylePlayer", "width=380,height=260,resizable=no");
             player.document.write(`
                 <html>
@@ -234,11 +225,14 @@
                 <body>
                     <div class="station-name">🟢 FM 88.50 MHz</div>
                     <div class="desc">MUSIC LINE STATION • LIVE STREAMING</div>
+                    
+                    <!-- ฝังลิงก์รับสัญญาณเสียงวิทยุออนไลน์พอร์ตตรงของคุณสำเร็จ -->
                     <audio controls autoplay>
                         <source src="http://fmsanglar.ddnsbycat.com:9001/stream.mp3" type="audio/mpeg">
-                        ระบบไม่รองรับเครื่องเล่นเสียงนี้
+                        ระบบเบราว์เซอร์ไม่รองรับเครื่องเล่นเสียงนี้
                     </audio>
-                    <div class="alert-msg">*เปิดหน้าต่างขนาดเล็กนี้ทิ้งไว้เพื่อการรับฟังเสียงเพลงอย่างต่อเนื่อง</div>
+                    
+                    <div class="alert-msg">*เปิดหน้าต่างเล็กนี้ทิ้งไว้เพื่อการรับฟังเสียงเพลงอย่างต่อเนื่องแบบไม่มีสะดุด</div>
                 </body>
                 </html>
             `);
