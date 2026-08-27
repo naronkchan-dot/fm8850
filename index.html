@@ -97,6 +97,7 @@
             to { height: 28px; }
         }
 
+        /* ปรับปุ่มให้เป็นแท็กสำหรับลิงก์ข้ามไปแท็บใหม่ */
         .play-btn-green {
             background: linear-gradient(135deg, #00b16a, #00ffaa);
             color: #050b08;
@@ -106,7 +107,7 @@
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: bold;
-            cursor: pointer;
+            text-decoration: none; /* เอาเส้นใต้ลิงก์ออก */
             transition: all 0.3s ease;
             box-shadow: 0 10px 25px rgba(0, 177, 106, 0.3);
             display: inline-flex;
@@ -176,10 +177,10 @@
             <div class="wave-bar"></div>
         </div>
 
-        <!-- ปุ่มกดเชื่อมสัญญาณเสียงวิทยุผ่านระบบ Pop-up หน้าต่างย่อย -->
-        <button class="play-btn-green" onclick="launchGreenPlayer()">
+        <!-- แก้ไขตรงนี้: ปรับปุ่มให้เป็นลิงก์ตรง และใส่ target="_blank" เพื่อให้เปิดในแท็บใหม่ทันที -->
+        <a href="http://fmsanglar.ddnsbycat.com:9001/stream.mp3" target="_blank" class="play-btn-green">
             <span>▶</span> LISTEN LIVE ONLINE
-        </button>
+        </a>
         
         <div class="program-schedule">
             <div class="schedule-title">📻 ON AIR SCHEDULE</div>
@@ -197,47 +198,6 @@
             🔗 ไปยังหน้า Facebook แฟนเพจหลัก
         </a>
     </div>
-
-    <script>
-        function launchGreenPlayer() {
-            // ระบบสั่งเปิดป๊อปอัปตัวเล่นขนาดกะทัดรัดแยกส่วนออกมา เพื่อหลบเลี่ยงนโยบาย HTTPS บล็อกสื่อไม่ปลอดภัย
-            const player = window.open("", "GreenWaveStylePlayer", "width=380,height=260,resizable=no");
-            player.document.write(`
-                <html>
-                <head>
-                    <title>FM 88.50 MHz LIVE</title>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <style>
-                        body { 
-                            background-color: #050b08; 
-                            color: #ffffff; 
-                            text-align: center; 
-                            font-family: sans-serif; 
-                            padding: 40px 20px;
-                        }
-                        .station-name { color: #00ffaa; font-size: 1.6rem; font-weight: bold; margin-bottom: 5px; }
-                        .desc { color: #64748b; font-size: 0.85rem; margin-bottom: 25px; letter-spacing: 1px; }
-                        audio { width: 100%; max-width: 310px; }
-                        .alert-msg { font-size: 11px; margin-top: 25px; color: #ff4d4d; opacity: 0.8; }
-                    </style>
-                </head>
-                <body>
-                    <div class="station-name">🟢 FM 88.50 MHz</div>
-                    <div class="desc">MUSIC LINE STATION • LIVE STREAMING</div>
-                    
-                    <!-- ฝังลิงก์รับสัญญาณเสียงวิทยุออนไลน์พอร์ตตรงของคุณสำเร็จ -->
-                    <audio controls autoplay>
-                        <source src="http://fmsanglar.ddnsbycat.com:9001/stream.mp3" type="audio/mpeg">
-                        ระบบเบราว์เซอร์ไม่รองรับเครื่องเล่นเสียงนี้
-                    </audio>
-                    
-                    <div class="alert-msg">*เปิดหน้าต่างเล็กนี้ทิ้งไว้เพื่อการรับฟังเสียงเพลงอย่างต่อเนื่องแบบไม่มีสะดุด</div>
-                </body>
-                </html>
-            `);
-        }
-    </script>
 
 </body>
 </html>
