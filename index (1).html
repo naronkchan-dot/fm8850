@@ -3,133 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบฟังวิทยุออนไลน์ฟรี</title>
+    <title>FM88.50MHz music line station</title>
     <style>
-        :root {
-            --primary-color: #4f46e5;
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-color: #f8fafc;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1e1e2f, #0f0f1a);
+            color: #ffffff;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             min-height: 100vh;
         }
-        .container {
-            background-color: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 450px;
+        .player-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            border: 1px solid #334155;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            position: relative;
         }
-        .logo-area {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
+        .logo-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .logo {
+            font-size: 5rem;
+        }
+        .playing .logo {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #00ffcc;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+        p {
+            font-size: 1rem;
+            color: #a0a0c0;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .play-btn {
+            background: #00ffcc;
+            color: #0f0f1a;
+            border: none;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: inline-flex;
             justify-content: center;
-            font-size: 2.5rem;
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-            animation: pulse 2s infinite;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.4);
+            margin-bottom: 20px;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 25px rgba(0, 255, 204, 0.6);
+        }
+        .status-tag {
+            font-size: 0.85rem;
+            color: #ff3366;
+            background: rgba(255, 51, 102, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px solid rgba(255, 51, 102, 0.2);
+        }
+        .playing .status-tag {
+            color: #00ffcc;
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid rgba(0, 255, 204, 0.2);
         }
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(168, 85, 247, 0.8); }
-            100% { transform: scale(1); box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
         }
-        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; font-weight: 700; }
-        .status { color: #10b981; font-size: 0.9rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .status::before { content: ""; width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; display: inline-block; }
-        
-        .controls { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
-        .btn {
-            background-color: var(--primary-color);
-            border: none;
-            color: white;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            width: 100%;
-        }
-        .btn:hover { background-color: #4338ca; transform: translateY(-2px); }
-        .btn:active { transform: translateY(0); }
-        
-        .volume-container { display: flex; align-items: center; gap: 1rem; background: #0f172a; padding: 0.75rem 1.2rem; border-radius: 50px; }
-        .volume-slider { flex: 1; accent-color: var(--primary-color); cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo-area">📻</div>
-        <h1>สถานีวิทยุออนไลน์</h1>
-        <div class="status">กำลังออกอากาศ Live</div>
+    <div class="player-container" id="playerContainer">
+        <div class="logo-wrapper">
+            <div class="logo">📻</div>
+        </div>
+        <h1>FM88.50MHz</h1>
+        <p>music line station</p>
+        
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+        <br>
+        <div class="status-tag" id="statusTag">กำลังเชื่อมต่อ...</div>
 
-        <!-- ตัวเล่นเสียงซ่อนไว้เพื่อใช้ปุ่ม Custom Custom -->
         <audio id="radioPlayer" preload="none">
-            <!-- ใส่ลิงก์ Stream วิทยุของคุณที่นี่ -->
-            <source src="https://fmsanglar.ddnsbycat.com:9001" type="audio/mpeg">
-            เบราว์เซอร์ของคุณไม่รองรับการเล่นวิทยุนี้
+            <source src="http://ddnsbycat.com;" type="audio/mpeg">
         </audio>
-
-        <div class="controls">
-            <button class="btn" id="playBtn" onclick="togglePlay()">▶ กดเพื่อรับฟัง</button>
-        </div>
-
-        <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" id="volume" min="0" max="1" step="0.1" value="0.8" oninput="changeVolume(this.value)">
-        </div>
     </div>
 
     <script>
-        const player = document.getElementById('radioPlayer');
+        const audio = document.getElementById('radioPlayer');
         const playBtn = document.getElementById('playBtn');
+        const container = document.getElementById('playerContainer');
+        const statusTag = document.getElementById('statusTag');
+
+        function playRadio() {
+            audio.play().then(() => {
+                playBtn.innerText = '⏸';
+                container.classList.add('playing');
+                statusTag.innerText = '• กำลังถ่ายทอดสด (LIVE)';
+            }).catch(error => {
+                console.log("Autoplay ถูกบล็อกโดยเบราว์เซอร์ รอการกดจากผู้ใช้");
+                playBtn.innerText = '▶';
+                container.classList.remove('playing');
+                statusTag.innerText = 'คลิกปุ่ม Play เพื่อฟังวิทยุ';
+            });
+        }
 
         function togglePlay() {
-            if (player.paused) {
-                // เคลียร์แคชตัวสตรีมมิ่งเพื่อให้เป็นเวลาปัจจุบันที่สุดเวลาเปิดฟัง
-                const currentSrc = player.src;
-                player.src = '';
-                player.src = currentSrc;
-                
-                player.play()
-                    .then(() => {
-                        playBtn.innerText = '⏸ หยุดฟัง';
-                        playBtn.style.backgroundColor = '#ef4444';
-                    })
-                    .catch(error => {
-                        alert('ไม่สามารถเล่นสตรีมนี้ได้ กรุณาตรวจสอบลิงก์สตรีมของคุณ');
-                        console.error(error);
-                    });
+            if (audio.paused) {
+                audio.load();
+                playRadio();
             } else {
-                player.pause();
-                playBtn.innerText = '▶ กดเพื่อรับฟัง';
-                playBtn.style.backgroundColor = '#4f46e5';
+                audio.pause();
+                playBtn.innerText = '▶';
+                container.classList.remove('playing');
+                statusTag.innerText = 'หยุดออกอากาศชั่วคราว';
             }
         }
 
-        function changeVolume(val) {
-            player.volume = val;
-        }
+        window.addEventListener('DOMContentLoaded', () => {
+            audio.load();
+            playRadio();
+        });
     </script>
+
 </body>
 </html>
